@@ -11,6 +11,7 @@ import com.fdmgroup.model.DailyCompanyTradeResult;
 import com.fdmgroup.model.DailyIndexTradeResult;
 import com.fdmgroup.model.Company;
 import com.fdmgroup.model.Trade;
+import com.fdmgroup.service.ConsoleResultPrinter;
 import com.fdmgroup.service.DailyCompanyResultCalculator;
 import com.fdmgroup.service.DailyIndexCalculator;
 import com.fdmgroup.service.FileIO;
@@ -32,7 +33,7 @@ public class Main {
 		
 		HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults = DailyIndexCalculator.calculateAllDailyIndexResults(dailyTradeResultsOfCompanies);
 		
-		
+		ConsoleResultPrinter.printResults(dailyTradeResultsOfCompanies, dailyIndexResults);
 		
 		
 		
