@@ -1,12 +1,9 @@
 package com.fdmgroup.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Locale;
 
 import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvDate;
-
 
 public class Trade {
 	
@@ -22,7 +19,7 @@ public class Trade {
 	
 	@CsvBindByPosition(position = 3)
 	private int trades;
-
+	
 	public Trade() {
 		super();
 	}
@@ -34,6 +31,8 @@ public class Trade {
 		this.price = price;
 		this.trades = trades;
 	}
+	
+	
 
 	public LocalDateTime getDate() {
 		return date;
@@ -71,7 +70,6 @@ public class Trade {
 	public String toString() {
 		return "Trade [date=" + date + ", company=" + company + ", price=" + price + ", trades=" + trades + "]";
 	}
-	
 	
 
 }

@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.TreeMap;
 
 import com.fdmgroup.model.DailyCompanyTradeResult;
+import com.fdmgroup.model.DailyIndexTradeResult;
 import com.fdmgroup.model.Company;
 import com.fdmgroup.model.Trade;
 import com.fdmgroup.service.DailyCompanyResultCalculator;
+import com.fdmgroup.service.DailyIndexCalculator;
 import com.fdmgroup.service.FileIO;
 
 public class Main {
@@ -25,11 +27,18 @@ public class Main {
 		
 		
 		TreeMap< LocalDate , EnumMap< Company, DailyCompanyTradeResult >> dailyTradeResultsOfCompanies
-				= DailyCompanyResultCalculator.CalculateAllDailyCompanyResults(trades);
+				= DailyCompanyResultCalculator.calculateAllDailyCompanyResults(trades);
+		
+		
+		HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults = DailyIndexCalculator.calculateAllDailyIndexResults(dailyTradeResultsOfCompanies);
 		
 		
 		
-
+		
+		
+		//dailyIndexResults.forEach((date,index) -> {System.out.println( date );
+		//	System.out.println(index);
+		//});
 
 	}
 

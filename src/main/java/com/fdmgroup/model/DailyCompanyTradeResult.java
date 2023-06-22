@@ -6,18 +6,15 @@ public class DailyCompanyTradeResult {
 	private Trade firstTrade;
 	private Trade heighestTrade;
 	private Trade lowestTrade;
-	private int numberOfTrades;
-	private double sumOfTradePrices;
+	private double tradeVolume;
 
-	public DailyCompanyTradeResult(Trade lastTrade, Trade firstTrade, Trade heighestTrade, Trade lowestTrade,
-			int numberOfTrades, double sumOfTradePrices) {
+	public DailyCompanyTradeResult(Trade lastTrade, Trade firstTrade, Trade heighestTrade, Trade lowestTrade,double tradeVolume) {
 		super();
 		this.lastTrade = lastTrade;
 		this.firstTrade = firstTrade;
 		this.heighestTrade = heighestTrade;
 		this.lowestTrade = lowestTrade;
-		this.numberOfTrades = numberOfTrades;
-		this.sumOfTradePrices = sumOfTradePrices;
+		this.tradeVolume = tradeVolume;
 	}
 
 	public DailyCompanyTradeResult() {
@@ -55,29 +52,17 @@ public class DailyCompanyTradeResult {
 	public void setLowestTrade(Trade lowestTrade) {
 		this.lowestTrade = lowestTrade;
 	}
-
-	public int getNumberOfTrades() {
-		return numberOfTrades;
+	
+	public double getTradeVolume() {
+		return tradeVolume;
 	}
 
-	public void setNumberOfTrades(int numberOfTrades) {
-		this.numberOfTrades = numberOfTrades;
+	public void setTradeVolume(double tradeVolume) {
+		this.tradeVolume = tradeVolume;
 	}
 
-	public double getSumOfTradePrices() {
-		return sumOfTradePrices;
-	}
-
-	public void setSumOfTradePrices(double sumOfTradePrices) {
-		this.sumOfTradePrices = sumOfTradePrices;
-	}
-
-	public void incrementNumberOfTradesByOne() {
-		numberOfTrades++;
-	}
-
-	public void incrementSumOfTradePrices(double amount) {
-		sumOfTradePrices += amount;
+	public void incrementTradeVolume(double amount) {
+		tradeVolume += amount;
 	}
 
 }
