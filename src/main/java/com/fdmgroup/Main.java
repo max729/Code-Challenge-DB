@@ -1,15 +1,14 @@
 package com.fdmgroup;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
+import com.fdmgroup.model.Company;
 import com.fdmgroup.model.DailyCompanyTradeResult;
 import com.fdmgroup.model.DailyIndexTradeResult;
-import com.fdmgroup.model.Company;
 import com.fdmgroup.model.Trade;
 import com.fdmgroup.service.ConsoleResultPrinter;
 import com.fdmgroup.service.DailyCompanyResultCalculator;
@@ -35,11 +34,7 @@ public class Main {
 		
 		ConsoleResultPrinter.printResults(dailyTradeResultsOfCompanies, dailyIndexResults);
 		
-		
-		
-		//dailyIndexResults.forEach((date,index) -> {System.out.println( date );
-		//	System.out.println(index);
-		//});
+
 
 	}
 

@@ -1,6 +1,5 @@
 package com.fdmgroup.service;
 
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import com.fdmgroup.model.DailyIndexTradeResult;
 
 public class ConsoleResultPrinter {
 
-	private static final DecimalFormat df = new DecimalFormat("0.00");
 	
 	public static void printResults(TreeMap< LocalDate , EnumMap< Company, DailyCompanyTradeResult >> dailyTradeResultsOfCompanies,
 										HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults) {
@@ -21,28 +19,25 @@ public class ConsoleResultPrinter {
 			
 			System.out.println( "---------------------" + date + "---------------------"  );
 			
-			companieResults.forEach( (company,result)->{
+			for (Company company : Company.values()  ) {
 				System.out.println( company + ": " );
-				System.out.println( "Price of the first Trade: " + df.format(result.getFirstTrade().getPrice())   );
-				System.out.println( "Price of the last Trade: " + df.format(result.getLastTrade().getPrice())   );
-				System.out.println( "Price of the most expensive Trade: " + df.format(result.getHeighestTrade().getPrice())   );
-				System.out.println( "Price of the cheapest Trade: " + df.format(result.getLowestTrade().getPrice())   );
-				System.out.println( "Total Daily Volume: " + df.format(result.getTradeVolume())   );
-			});
+				if(companieResults.containsKey(company)) {
+					System.out.println( companieResults.get(company) );
+				} else {
+					System.out.println("Was not traded this day");
+				}
+				
+				System.out.println("********************");
+			}
 			
 			
 			if(	dailyIndexResults.containsKey(date)) {
 				
 				DailyIndexTradeResult dailyIndexTradeResult = dailyIndexResults.get(date);
 				
-				System.out.println("********************");
 				System.out.println("Index : " );
-				System.out.println( "Price of the first Trade: " + df.format(dailyIndexTradeResult.getPriceOfFirstTrade())   );
-				System.out.println( "Price of the last Trade: " + df.format(dailyIndexTradeResult.getPriceOfLastTrade())   );
-				System.out.println( "Price of the most expensive Trade: " + df.format(dailyIndexTradeResult.getPriceOfHeihestTrade())   );
-				System.out.println( "Price of the cheapest Trade: " + df.format(dailyIndexTradeResult.getPriceOfLowestTrade())  );
-				System.out.println( "Total Daily Volume:: " + df.format(dailyIndexTradeResult.getTradeVolume())  );
-				
+				System.out.println(dailyIndexTradeResult);
+				System.out.println("********************");
 			}
 			
 			

@@ -1,5 +1,7 @@
 package com.fdmgroup.model;
 
+import java.text.DecimalFormat;
+
 public class DailyIndexTradeResult {
 
 	private double priceOfLastTrade;
@@ -64,9 +66,16 @@ public class DailyIndexTradeResult {
 
 	@Override
 	public String toString() {
-		return "DailyIndexTradeResult: \n [priceOfLastTrade=" + priceOfLastTrade + ", priceOfFirstTrade="
-				+ priceOfFirstTrade + ", priceOfHeihestTrade=" + priceOfHeihestTrade + ", priceOfLowestTrade="
-				+ priceOfLowestTrade + ", tradeVolume=" + tradeVolume + "] \n";
+		
+		final DecimalFormat df = new DecimalFormat("0.00");
+		
+		return "Daily Index Trade Result: \n"
+				+ "Price of the first Trade: " + df.format(getPriceOfFirstTrade()) + "\n"
+				+ "Price of the last Trade: "  + df.format(getPriceOfLastTrade()) + "\n"
+				+ "Price of the most expensive Trade: "  + df.format(getPriceOfHeihestTrade()) + "\n"
+				+ "Price of the cheapest Trade: " + df.format(getPriceOfLowestTrade()) + "\n"
+				+ "Total Daily Volume: " + df.format(getTradeVolume());
+
 	}
 	
 	

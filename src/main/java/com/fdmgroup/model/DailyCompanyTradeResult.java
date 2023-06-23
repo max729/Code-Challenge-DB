@@ -65,4 +65,16 @@ public class DailyCompanyTradeResult {
 		tradeVolume += amount;
 	}
 
+	@Override
+	public String toString() {
+		return "Daily Company Trade Result: \n"
+				+ "Price of the first Trade: " + firstTrade.getPrice() + "\n"
+				+ "Price of the last Trade: "  + lastTrade.getPrice() + "\n" 
+				+ "Price of the most expensive Trade: "  + heighestTrade.getPrice() + "\n" 
+				+ "Price of the cheapest Trade: "  + lowestTrade.getPrice() + "\n" 
+				+ "Total Daily Volume: " +  tradeVolume ;
+	}
+	
+	
+
 }
