@@ -10,38 +10,27 @@ import com.fdmgroup.model.Trade;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-
-
 /**
- * Service class for reading a csv file of trades using opencsv module.
- * Every line get map to java objects {@link com.fdmgroup.model.Trade Trade}
+ * Service class for reading a csv file of trades using opencsv module. Every
+ * line get map to java objects {@link com.fdmgroup.model.Trade Trade}
  * 
  * @author Max Schoppe
  *
  */
 public class FileIO {
+
+	public List<Trade> readFromFile(String filePath) throws FileNotFoundException {
+
 	
-	public static List<Trade> readFromFile(String filePath) {
+		Reader reader = new BufferedReader(new FileReader(filePath));
+
+		CsvToBean<Trade> csvReader = new CsvToBeanBuilder<Trade>(reader).withType(Trade.class).withSeparator(';')
+				.withIgnoreLeadingWhiteSpace(true).build();
 		
-		List<Trade> readingResults = null;
-		
-		try {
-			Reader reader = new BufferedReader(new FileReader(filePath));
-			
-			CsvToBean<Trade> csvReader = new CsvToBeanBuilder<Trade>(reader)
-												.withType(Trade.class)
-												.withSeparator(';')
-												.withIgnoreLeadingWhiteSpace(true)
-												.build();
-			readingResults = csvReader.parse();
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-			
-		
+		List<Trade> readingResults = csvReader.parse();
+
 		return readingResults;
-		
+
 	}
 
 }

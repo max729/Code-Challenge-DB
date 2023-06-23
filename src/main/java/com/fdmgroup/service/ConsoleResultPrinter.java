@@ -24,7 +24,7 @@ public class ConsoleResultPrinter {
 	 * @param dailyTradeResultsOfCompanies: Map with Date as key and daily trade results as value. The results are further map into company results
 	 * @param dailyIndexResults: Map with Date as key and daily trade results of the index as value.
 	 */
-	public static void printResults(TreeMap< LocalDate , EnumMap< Company, DailyCompanyTradeResult >> dailyTradeResultsOfCompanies,
+	public void printResults(TreeMap< LocalDate , EnumMap< Company, DailyCompanyTradeResult >> dailyTradeResultsOfCompanies,
 										HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults) {
 		
 		dailyTradeResultsOfCompanies.forEach( (date, companieResults )->{

@@ -19,7 +19,7 @@ import com.fdmgroup.model.Trade;
  */
 public class DailyCompanyResultCalculator {
 
-	public static TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> calculateAllDailyCompanyResults(
+	public TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> calculateAllDailyCompanyResults(
 			List<Trade> trades) {
 
 		HashMap<LocalDate, EnumMap<Company, List<Trade>>> tradesPerDayAndCompany = splitTradesIntoDateAndCompanyMap(
@@ -44,7 +44,7 @@ public class DailyCompanyResultCalculator {
 
 	}
 
-	private static HashMap<LocalDate, EnumMap<Company, List<Trade>>> splitTradesIntoDateAndCompanyMap(
+	private HashMap<LocalDate, EnumMap<Company, List<Trade>>> splitTradesIntoDateAndCompanyMap(
 			List<Trade> trades) {
 
 		HashMap<LocalDate, EnumMap<Company, List<Trade>>> tradesPerDayAndCompany = new HashMap<>();
@@ -58,7 +58,7 @@ public class DailyCompanyResultCalculator {
 		return tradesPerDayAndCompany;
 	}
 
-	private static DailyCompanyTradeResult CalculateDailyCompanyResult(List<Trade> trades) {
+	private DailyCompanyTradeResult CalculateDailyCompanyResult(List<Trade> trades) {
 
 		DailyCompanyTradeResult dailyCompanyTradeResult = new DailyCompanyTradeResult();
 

@@ -1,5 +1,6 @@
 package com.fdmgroup;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import com.fdmgroup.model.DailyIndexTradeResult;
 import com.fdmgroup.model.Trade;
 import com.fdmgroup.service.ConsoleResultPrinter;
 import com.fdmgroup.service.DailyCompanyResultCalculator;
-import com.fdmgroup.service.DailyIndexCalculator;
+import com.fdmgroup.service.DailyIndexResultCalculator;
 import com.fdmgroup.service.FileIO;
 
 /**
@@ -28,16 +29,32 @@ public class Main {
 	public static void main(String[] args) {
 
 		String filePath = "./src/main/resources/test-market.csv";
+		
+		FileIO fileIO = new FileIO();
+		
+		List<Trade> trades;
+		
+		try {
+			trades = fileIO.readFromFile(filePath);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		DailyCompanyResultCalculator dailyCompanyResultCalculator = new DailyCompanyResultCalculator();
 
-		List<Trade> trades = FileIO.readFromFile(filePath);
-
-		TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> dailyTradeResultsOfCompanies = DailyCompanyResultCalculator
+		TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> dailyTradeResultsOfCompanies = dailyCompanyResultCalculator
 				.calculateAllDailyCompanyResults(trades);
 
-		HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults = DailyIndexCalculator
+		
+		DailyIndexResultCalculator dailyIndexResultCalculator = new DailyIndexResultCalculator();
+		
+		HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults = dailyIndexResultCalculator
 				.calculateAllDailyIndexResults(dailyTradeResultsOfCompanies);
 
-		ConsoleResultPrinter.printResults(dailyTradeResultsOfCompanies, dailyIndexResults);
+		
+		ConsoleResultPrinter consoleResultPrinter = new ConsoleResultPrinter();
+		consoleResultPrinter.printResults(dailyTradeResultsOfCompanies, dailyIndexResults);
 
 	}
 
