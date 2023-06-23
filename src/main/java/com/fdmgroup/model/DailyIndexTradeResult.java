@@ -2,6 +2,12 @@ package com.fdmgroup.model;
 
 import java.text.DecimalFormat;
 
+/**
+ * Data class for holding the values of daily trades index
+ * 
+ * @author Max Schoppe
+ *
+ */
 public class DailyIndexTradeResult {
 
 	private double priceOfLastTrade;

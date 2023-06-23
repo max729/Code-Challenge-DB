@@ -9,6 +9,13 @@ import com.fdmgroup.model.Company;
 import com.fdmgroup.model.DailyCompanyTradeResult;
 import com.fdmgroup.model.DailyIndexTradeResult;
 
+
+/**
+ * Service class for calculating all daily trade indexes
+ * 
+ * @author Max Schoppe
+ *
+ */
 public class DailyIndexCalculator {
 
 	

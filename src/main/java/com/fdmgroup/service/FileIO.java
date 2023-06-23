@@ -10,6 +10,15 @@ import com.fdmgroup.model.Trade;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
+
+
+/**
+ * Service class for reading a csv file of trades using opencsv module.
+ * Every line get map to java objects {@link com.fdmgroup.model.Trade Trade}
+ * 
+ * @author Max Schoppe
+ *
+ */
 public class FileIO {
 	
 	public static List<Trade> readFromFile(String filePath) {

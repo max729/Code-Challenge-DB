@@ -5,6 +5,13 @@ import java.time.LocalDateTime;
 import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvDate;
 
+/**
+ * Data class that saves all given informations of Trades from the csv file. 
+ * Uses opencsv module and opencsv annotations for converting from csv line to java object
+ * 
+ * @author Max Schoppe
+ *
+ */
 public class Trade {
 	
 	@CsvBindByPosition(position = 0)

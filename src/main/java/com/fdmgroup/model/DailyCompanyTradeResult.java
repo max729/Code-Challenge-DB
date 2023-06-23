@@ -1,5 +1,13 @@
 package com.fdmgroup.model;
 
+import java.text.DecimalFormat;
+
+/**
+ * Data class with result of all daily trades of a company
+ * 
+ * @author Max Schoppe
+ *
+ */
 public class DailyCompanyTradeResult {
 
 	private Trade lastTrade;
@@ -67,12 +75,15 @@ public class DailyCompanyTradeResult {
 
 	@Override
 	public String toString() {
+		
+		final DecimalFormat df = new DecimalFormat("0.00");
+		
 		return "Daily Company Trade Result: \n"
-				+ "Price of the first Trade: " + firstTrade.getPrice() + "\n"
-				+ "Price of the last Trade: "  + lastTrade.getPrice() + "\n" 
-				+ "Price of the most expensive Trade: "  + heighestTrade.getPrice() + "\n" 
-				+ "Price of the cheapest Trade: "  + lowestTrade.getPrice() + "\n" 
-				+ "Total Daily Volume: " +  tradeVolume ;
+				+ "Price of the first Trade: " + df.format(firstTrade.getPrice()) + "\n"
+				+ "Price of the last Trade: "  + df.format(lastTrade.getPrice()) + "\n" 
+				+ "Price of the most expensive Trade: "  + df.format(heighestTrade.getPrice()) + "\n" 
+				+ "Price of the cheapest Trade: "  + df.format(lowestTrade.getPrice()) + "\n" 
+				+ "Total Daily Volume: " + df.format(tradeVolume) ;
 	}
 	
 	

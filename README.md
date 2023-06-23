@@ -8,7 +8,7 @@ Reads a specific file of Trades given in csv format. Analyze the data on a daily
 
 ### Running
 
-You can use maven commands or simply use the ide
+You can use maven commands or simply import into your ide as maven project
 
 first install maven dependencies
 

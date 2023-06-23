@@ -15,26 +15,29 @@ import com.fdmgroup.service.DailyCompanyResultCalculator;
 import com.fdmgroup.service.DailyIndexCalculator;
 import com.fdmgroup.service.FileIO;
 
+/**
+ * 
+ * Main class for start point of the program.
+ * Calls all necessary service class to print the daily trade results form the csv file to the console
+ * 
+ * @author Max Schoppe
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) {
 
-
-		
 		String filePath = "./src/main/resources/test-market.csv";
-		
-		List<Trade> trades = FileIO.readFromFile(filePath);
-		
-		
-		TreeMap< LocalDate , EnumMap< Company, DailyCompanyTradeResult >> dailyTradeResultsOfCompanies
-				= DailyCompanyResultCalculator.calculateAllDailyCompanyResults(trades);
-		
-		
-		HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults = DailyIndexCalculator.calculateAllDailyIndexResults(dailyTradeResultsOfCompanies);
-		
-		ConsoleResultPrinter.printResults(dailyTradeResultsOfCompanies, dailyIndexResults);
-		
 
+		List<Trade> trades = FileIO.readFromFile(filePath);
+
+		TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> dailyTradeResultsOfCompanies = DailyCompanyResultCalculator
+				.calculateAllDailyCompanyResults(trades);
+
+		HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults = DailyIndexCalculator
+				.calculateAllDailyIndexResults(dailyTradeResultsOfCompanies);
+
+		ConsoleResultPrinter.printResults(dailyTradeResultsOfCompanies, dailyIndexResults);
 
 	}
 

@@ -11,6 +11,12 @@ import com.fdmgroup.model.Company;
 import com.fdmgroup.model.DailyCompanyTradeResult;
 import com.fdmgroup.model.Trade;
 
+/**
+ * Service class for calculating result of all daily trades of companies
+ * 
+ * @author Max Schoppe
+ *
+ */
 public class DailyCompanyResultCalculator {
 
 	public static TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> calculateAllDailyCompanyResults(

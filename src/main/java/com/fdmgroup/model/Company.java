@@ -1,5 +1,11 @@
 package com.fdmgroup.model;
 
+/**
+ * Enum class of all traded companies
+ * 
+ * @author Max Schoppe
+ *
+ */
 public enum Company {
 	ABC,
 	MEGA,
