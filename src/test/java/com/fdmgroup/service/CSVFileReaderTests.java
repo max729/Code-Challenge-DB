@@ -13,14 +13,14 @@ import org.junit.jupiter.api.Test;
 import com.fdmgroup.model.Company;
 import com.fdmgroup.model.Trade;
 
-class FileIOTests {
+class CSVFileReaderTests {
 	
-	private FileIO fileIO;
+	private CSVFileReader csvFileReader;
 	
 	
 	@BeforeEach
 	public void setUp(){
-		fileIO = new FileIO();
+		csvFileReader = new CSVFileReader();
 	}
 	
 	
@@ -29,11 +29,11 @@ class FileIOTests {
 		
 		String filePath = "./src/test/resources/test_is_not_there.csv";
 		
-		assertThrows( FileNotFoundException.class, ()->	fileIO.readFromFile(filePath));
+		assertThrows( FileNotFoundException.class, ()->	csvFileReader.readFromFile(filePath));
 		
 		String filePath2 = "./src/test/resources/test_wrong_format.csv";
 		
-		assertThrows( RuntimeException.class, ()->	fileIO.readFromFile(filePath2));
+		assertThrows( RuntimeException.class, ()->	csvFileReader.readFromFile(filePath2));
 		
 	}
 	
@@ -45,7 +45,7 @@ class FileIOTests {
 		List<Trade> trades;
 		
 		try {
-			trades = fileIO.readFromFile(filePath);
+			trades = csvFileReader.readFromFile(filePath);
 			
 			Trade trade = trades.get(0);
 		

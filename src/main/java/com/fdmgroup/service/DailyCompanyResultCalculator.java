@@ -18,7 +18,7 @@ import com.fdmgroup.model.Trade;
  *
  */
 public class DailyCompanyResultCalculator {
-
+	
 	public TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> calculateAllDailyCompanyResults(
 			List<Trade> trades) {
 

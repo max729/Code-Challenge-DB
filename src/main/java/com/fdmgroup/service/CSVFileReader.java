@@ -17,7 +17,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
  * @author Max Schoppe
  *
  */
-public class FileIO {
+public class CSVFileReader {
 
 	public List<Trade> readFromFile(String filePath) throws FileNotFoundException {
 

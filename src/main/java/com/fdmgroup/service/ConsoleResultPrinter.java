@@ -25,7 +25,7 @@ public class ConsoleResultPrinter {
 	 * @param dailyIndexResults: Map with Date as key and daily trade results of the index as value.
 	 */
 	public void printResults(TreeMap< LocalDate , EnumMap< Company, DailyCompanyTradeResult >> dailyTradeResultsOfCompanies,
-										HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults) {
+										HashMap<LocalDate, HashMap<String,DailyIndexTradeResult>> dailyTradeResultsOfIndices) {
 		
 		dailyTradeResultsOfCompanies.forEach( (date, companieResults )->{
 			
@@ -43,13 +43,18 @@ public class ConsoleResultPrinter {
 			}
 			
 			
-			if(	dailyIndexResults.containsKey(date)) {
+			if(	dailyTradeResultsOfIndices.containsKey(date)) {
 				
-				DailyIndexTradeResult dailyIndexTradeResult = dailyIndexResults.get(date);
+				dailyTradeResultsOfIndices.get(date).forEach( (IndexName,dailyIndexTradeResult)->{
+					
 				
-				System.out.println("Index : " );
-				System.out.println(dailyIndexTradeResult);
-				System.out.println("********************");
+					System.out.println("Index : " + IndexName );
+					System.out.println(dailyIndexTradeResult);
+					System.out.println("********************");
+					
+				});
+				
+				
 			}
 			
 			

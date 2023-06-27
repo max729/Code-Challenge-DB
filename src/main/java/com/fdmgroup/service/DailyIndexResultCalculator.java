@@ -3,11 +3,13 @@ package com.fdmgroup.service;
 import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TreeMap;
 
 import com.fdmgroup.model.Company;
 import com.fdmgroup.model.DailyCompanyTradeResult;
 import com.fdmgroup.model.DailyIndexTradeResult;
+import com.fdmgroup.model.Index;
 
 /**
  * Service class for calculating all daily trade indexes
@@ -17,36 +19,43 @@ import com.fdmgroup.model.DailyIndexTradeResult;
  */
 public class DailyIndexResultCalculator {
 
-	public HashMap<LocalDate, DailyIndexTradeResult> calculateAllDailyIndexResults(
-			TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> dailyTradeResultsOfCompanies) {
+	public HashMap<LocalDate, HashMap<String, DailyIndexTradeResult>> calculateAllDailyIndexResults(
+			TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> dailyTradeResultsOfCompanies,
+			List<Index> indices) {
 
-		HashMap<LocalDate, DailyIndexTradeResult> dailyIndexResults = new HashMap<>();
+		HashMap<LocalDate, HashMap<String, DailyIndexTradeResult>> dailyIndexResults = new HashMap<>();
 
 		EnumMap<Company, DailyCompanyTradeResult> lastCompanyResults = new EnumMap<>(Company.class);
 
 		dailyTradeResultsOfCompanies.forEach((date, dailyCompanyTradeResults) -> {
 
-			DailyIndexTradeResult dailyIndexTradeResult = new DailyIndexTradeResult();
+			for (Index index : indices) {
 
-			for (Company company : Company.values()) {
-				DailyCompanyTradeResult dailyCompanyTradeResult;
-				if (dailyCompanyTradeResults.containsKey(company)) {
+				DailyIndexTradeResult dailyIndexTradeResult = new DailyIndexTradeResult();
 
-					dailyCompanyTradeResult = dailyCompanyTradeResults.get(company);
+				for (Company company : index.getIndexCompanies()) {
 
-					lastCompanyResults.put(company, dailyCompanyTradeResult);
+					DailyCompanyTradeResult dailyCompanyTradeResult;
 
-				} else if (lastCompanyResults.containsKey(company)) {
-					dailyCompanyTradeResult = lastCompanyResults.get(company);
+					if (dailyCompanyTradeResults.containsKey(company)) {
 
-				} else
-					return;
+						dailyCompanyTradeResult = dailyCompanyTradeResults.get(company);
 
-				calculateIndexFraction(company, dailyCompanyTradeResult, dailyIndexTradeResult);
+						lastCompanyResults.put(company, dailyCompanyTradeResult);
 
+					} else if (lastCompanyResults.containsKey(company)) {
+						dailyCompanyTradeResult = lastCompanyResults.get(company);
+
+					} else
+						return;
+
+					updateDailyIndexTradeResult(company, dailyCompanyTradeResult, dailyIndexTradeResult, index);
+
+				}
+
+				dailyIndexResults.computeIfAbsent(date, k -> new HashMap<>()).put(index.getName(),
+						dailyIndexTradeResult);
 			}
-
-			dailyIndexResults.put(date, dailyIndexTradeResult);
 
 		});
 
@@ -54,19 +63,21 @@ public class DailyIndexResultCalculator {
 
 	}
 
-	private void calculateIndexFraction(Company company, DailyCompanyTradeResult dailyCompanyTradeResult,
-			DailyIndexTradeResult dailyIndexTradeResult) {
+	private void updateDailyIndexTradeResult(Company company, DailyCompanyTradeResult dailyCompanyTradeResult,
+			DailyIndexTradeResult dailyIndexTradeResult, Index index) {
+
+		double companyWeight = index.getIndexWeightOfCompany(company);
 
 		dailyIndexTradeResult.setPriceOfFirstTrade(dailyIndexTradeResult.getPriceOfFirstTrade()
-				+ Company.getIndexWeight(company) * dailyCompanyTradeResult.getFirstTrade().getPrice());
+				+ companyWeight * dailyCompanyTradeResult.getFirstTrade().getPrice());
 		dailyIndexTradeResult.setPriceOfHeihestTrade(dailyIndexTradeResult.getPriceOfHeihestTrade()
-				+ Company.getIndexWeight(company) * dailyCompanyTradeResult.getHeighestTrade().getPrice());
+				+ companyWeight * dailyCompanyTradeResult.getHeighestTrade().getPrice());
 		dailyIndexTradeResult.setPriceOfLastTrade(dailyIndexTradeResult.getPriceOfLastTrade()
-				+ Company.getIndexWeight(company) * dailyCompanyTradeResult.getLastTrade().getPrice());
+				+ companyWeight * dailyCompanyTradeResult.getLastTrade().getPrice());
 		dailyIndexTradeResult.setPriceOfLowestTrade(dailyIndexTradeResult.getPriceOfLowestTrade()
-				+ Company.getIndexWeight(company) * dailyCompanyTradeResult.getLowestTrade().getPrice());
-		dailyIndexTradeResult.setTradeVolume(dailyIndexTradeResult.getTradeVolume()
-				+ Company.getIndexWeight(company) * dailyCompanyTradeResult.getTradeVolume());
+				+ companyWeight * dailyCompanyTradeResult.getLowestTrade().getPrice());
+		dailyIndexTradeResult.setTradeVolume(dailyIndexTradeResult.getTradeVolume() 
+				+ companyWeight * dailyCompanyTradeResult.getTradeVolume());
 
 	}
 

@@ -69,6 +69,26 @@ public class DailyIndexTradeResult {
 	public void setTradeVolume(double tradeVolume) {
 		this.tradeVolume = tradeVolume;
 	}
+	
+	
+	public void increasePriceOfFirstTrade(double amount) {
+		priceOfFirstTrade += amount;
+	}
+	
+	public void increasePriceOfHeihestTrade(double amount) {
+		priceOfHeihestTrade += amount;
+	}
+	
+	
+	public void increasePriceOfLowestTrade(double amount) {
+		priceOfLowestTrade+= amount;
+	}
+	
+	public void increaseTradeVolume(double amount) {
+		tradeVolume += amount;
+	}
+	
+	
 
 	@Override
 	public String toString() {
