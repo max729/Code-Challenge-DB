@@ -1,18 +1,18 @@
 package com.fdmgroup.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.fdmgroup.model.Company;
 import com.fdmgroup.model.DailyCompanyTradeResult;
 import com.fdmgroup.model.Trade;
 
@@ -36,27 +36,29 @@ public class DailyCompanyResultCalculatorTest {
 	@Test
 	void test_MethodeCalculateAllDailyCompanyResults_withOneCompanyAsInput() {
 		
-		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(10, 0)), Company.ABC, 10.0d, 1));
-		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(9, 0)), Company.ABC, 9.0d, 1));
-		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(11, 0)), Company.ABC, 11.0d, 1));
-		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(10, 0)), Company.ABC, 20.0d, 1));
-		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(10, 0)), Company.ABC, 1.0d, 1));
+		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(10, 0)), "ABC", 10.0d, 1));
+		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(9, 0)),  "ABC", 9.0d, 1));
+		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(11, 0)), "ABC", 11.0d, 2));
+		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(10, 0)), "ABC", 20.0d, 1));
+		trades.add(new Trade(LocalDateTime.of(date, LocalTime.of(10, 0)), "ABC", 1.0d, 7));
 		
-		TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> result = dailyCompanyResultCalculator
+		Map<LocalDate, HashMap<String, DailyCompanyTradeResult>> result = dailyCompanyResultCalculator
 				.calculateAllDailyCompanyResults(trades);
 
 		assertEquals(1, result.size());
 
 		assertEquals(1, result.get(date).size());
 
-		DailyCompanyTradeResult abcCompanyResult = result.get(date).get(Company.ABC);
+		DailyCompanyTradeResult abcCompanyResult = result.get(date).get("ABC");
 
 		assertEquals(9.0d, abcCompanyResult.getFirstTrade().getPrice());
 		assertEquals(11.0d, abcCompanyResult.getLastTrade().getPrice());
 		assertEquals(20.0d, abcCompanyResult.getHeighestTrade().getPrice());
 		assertEquals(1.0d, abcCompanyResult.getLowestTrade().getPrice());
-		assertEquals(51.0d, abcCompanyResult.getTradeVolume());
+		assertEquals(68.0d, abcCompanyResult.getTradeVolume());
 
 	}
+	
+
 
 }
