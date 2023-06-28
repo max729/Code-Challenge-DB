@@ -1,5 +1,6 @@
 package com.fdmgroup;
 
+import java.awt.EventQueue;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import com.fdmgroup.service.CSVFileReader;
 import com.fdmgroup.service.ConsoleResultPrinter;
 import com.fdmgroup.service.DailyCompanyResultCalculator;
 import com.fdmgroup.service.DailyIndexResultCalculator;
+import com.fdmgroup.service.ResultToChartService;
 
 /**
  * 
@@ -61,6 +63,13 @@ public class Main {
 
 		ConsoleResultPrinter consoleResultPrinter = new ConsoleResultPrinter();
 		consoleResultPrinter.printResults(dailyTradeResultsOfCompanies, dailyTradeResultsOfIndices, companies);
+		
+		
+		EventQueue.invokeLater(() -> {
+
+            var ex = new ResultToChartService(dailyTradeResultsOfIndices, dailyTradeResultsOfCompanies, companies);
+            ex.setVisible(true);
+        });
 
 	}
 
