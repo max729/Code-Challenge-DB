@@ -4,11 +4,11 @@ import java.util.Set;
 
 public interface Index {
 
-	public abstract double getIndexWeightOfCompany(Company company);
+	public abstract double getIndexWeightOfCompany(String companyName);
 	
 	public abstract String getName();
 	
-	public abstract Set<Company> getIndexCompanies();
+	public abstract Set<String> getIndexCompanies();
 	
 	
 	

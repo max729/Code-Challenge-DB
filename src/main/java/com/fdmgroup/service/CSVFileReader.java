@@ -21,15 +21,12 @@ public class CSVFileReader {
 
 	public List<Trade> readFromFile(String filePath) throws FileNotFoundException {
 
-	
 		Reader reader = new BufferedReader(new FileReader(filePath));
 
 		CsvToBean<Trade> csvReader = new CsvToBeanBuilder<Trade>(reader).withType(Trade.class).withSeparator(';')
 				.withIgnoreLeadingWhiteSpace(true).build();
-		
-		List<Trade> readingResults = csvReader.parse();
 
-		return readingResults;
+		return csvReader.parse();
 
 	}
 

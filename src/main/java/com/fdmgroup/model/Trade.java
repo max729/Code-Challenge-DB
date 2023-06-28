@@ -19,24 +19,24 @@ public class Trade {
 	private LocalDateTime date;
 	
 	@CsvBindByPosition(position = 1)
-	private Company company;
+	private String company;
 	
 	@CsvBindByPosition(position = 2, locale = "de-DE")
 	private double price;
 	
 	@CsvBindByPosition(position = 3)
-	private int trades;
+	private int numberTraded;
 	
 	public Trade() {
 		super();
 	}
 
-	public Trade(LocalDateTime date, Company company, double price, int trades) {
+	public Trade(LocalDateTime date, String company, double price, int numberTraded) {
 		super();
 		this.date = date;
 		this.company = company;
 		this.price = price;
-		this.trades = trades;
+		this.numberTraded = numberTraded;
 	}
 	
 	
@@ -49,11 +49,11 @@ public class Trade {
 		this.date = date;
 	}
 
-	public Company getCompany() {
+	public String getCompany() {
 		return company;
 	}
 
-	public void setCompany(Company company) {
+	public void setCompany(String company) {
 		this.company = company;
 	}
 
@@ -65,17 +65,17 @@ public class Trade {
 		this.price = price;
 	}
 
-	public int getTrades() {
-		return trades;
+	public int getNumberTraded() {
+		return numberTraded;
 	}
 
-	public void setTrades(int trades) {
-		this.trades = trades;
+	public void setNumberTraded(int numberTraded) {
+		this.numberTraded = numberTraded;
 	}
 
 	@Override
 	public String toString() {
-		return "Trade [date=" + date + ", company=" + company + ", price=" + price + ", trades=" + trades + "]";
+		return "Trade [date=" + date + ", company=" + company + ", price=" + price + ", numberTraded=" + numberTraded + "]";
 	}
 	
 

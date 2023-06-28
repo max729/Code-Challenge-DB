@@ -10,7 +10,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.fdmgroup.model.Company;
 import com.fdmgroup.model.Trade;
 
 class CSVFileReaderTests {
@@ -50,8 +49,8 @@ class CSVFileReaderTests {
 			Trade trade = trades.get(0);
 		
 			assertEquals( trade.getPrice(), 3997.90d  );
-			assertEquals( trade.getCompany(), Company.valueOf("TRX") );
-			assertEquals( trade.getTrades(), 879  );
+			assertEquals( trade.getCompany(), "TRX" );
+			assertEquals( trade.getNumberTraded(), 879  );
 			assertEquals( trade.getDate(),  LocalDateTime.of( 2023,06,01, 9,0,1   )  );
 			
 			

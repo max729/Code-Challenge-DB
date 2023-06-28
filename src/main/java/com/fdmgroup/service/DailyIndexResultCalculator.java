@@ -1,12 +1,10 @@
 package com.fdmgroup.service;
 
 import java.time.LocalDate;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
 
-import com.fdmgroup.model.Company;
 import com.fdmgroup.model.DailyCompanyTradeResult;
 import com.fdmgroup.model.DailyIndexTradeResult;
 import com.fdmgroup.model.Index;
@@ -19,13 +17,21 @@ import com.fdmgroup.model.Index;
  */
 public class DailyIndexResultCalculator {
 
-	public HashMap<LocalDate, HashMap<String, DailyIndexTradeResult>> calculateAllDailyIndexResults(
-			TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> dailyTradeResultsOfCompanies,
-			List<Index> indices) {
+	
+	/**
+	 * Calculates the daily Trade {@link com.fdmgroup.model.DailyCompanyTradeResult
+	 * index} for every days and every different index
+	 * 
+	 * @param Map ( date , Map Caompany , Daily Company Trade Result)
+	 * @return Map ( date , List different daily indices Results)
+	 */
+	public Map<LocalDate, HashMap<String, DailyIndexTradeResult>> calculateAllDailyIndexResults(
+				Map<LocalDate, HashMap<String, DailyCompanyTradeResult>> dailyTradeResultsOfCompanies,
+				List<Index> indices) {
 
 		HashMap<LocalDate, HashMap<String, DailyIndexTradeResult>> dailyIndexResults = new HashMap<>();
 
-		EnumMap<Company, DailyCompanyTradeResult> lastCompanyResults = new EnumMap<>(Company.class);
+		HashMap<String, DailyCompanyTradeResult> lastCompanyResults = new HashMap<>();
 
 		dailyTradeResultsOfCompanies.forEach((date, dailyCompanyTradeResults) -> {
 
@@ -33,7 +39,7 @@ public class DailyIndexResultCalculator {
 
 				DailyIndexTradeResult dailyIndexTradeResult = new DailyIndexTradeResult();
 
-				for (Company company : index.getIndexCompanies()) {
+				for (String company : index.getIndexCompanies()) {
 
 					DailyCompanyTradeResult dailyCompanyTradeResult;
 
@@ -63,10 +69,20 @@ public class DailyIndexResultCalculator {
 
 	}
 
-	private void updateDailyIndexTradeResult(Company company, DailyCompanyTradeResult dailyCompanyTradeResult,
-			DailyIndexTradeResult dailyIndexTradeResult, Index index) {
+	/**
+	 * calculates a fraction of the Index for a company and add it to the Index result data
+	 * function has side effects
+	 * @param company name
+	 * @param dailyCompanyTradeResult
+	 * @param dailyIndexTradeResult 
+	 * @param index that should be calculated
+	 */
+	private void updateDailyIndexTradeResult(	String companyName, 
+												DailyCompanyTradeResult dailyCompanyTradeResult,
+												DailyIndexTradeResult dailyIndexTradeResult, 
+												Index index) {
 
-		double companyWeight = index.getIndexWeightOfCompany(company);
+		double companyWeight = index.getIndexWeightOfCompany(companyName);
 
 		dailyIndexTradeResult.setPriceOfFirstTrade(dailyIndexTradeResult.getPriceOfFirstTrade()
 				+ companyWeight * dailyCompanyTradeResult.getFirstTrade().getPrice());

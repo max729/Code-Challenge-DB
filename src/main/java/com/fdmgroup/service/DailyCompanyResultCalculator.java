@@ -2,12 +2,14 @@ package com.fdmgroup.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
-import com.fdmgroup.model.Company;
 import com.fdmgroup.model.DailyCompanyTradeResult;
 import com.fdmgroup.model.Trade;
 
@@ -18,20 +20,26 @@ import com.fdmgroup.model.Trade;
  *
  */
 public class DailyCompanyResultCalculator {
-	
-	public TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> calculateAllDailyCompanyResults(
+
+	/**
+	 * Calculates the daily Trade {@link com.fdmgroup.model.DailyCompanyTradeResult
+	 * Result} for every days and every Company contained in the input
+	 * 
+	 * @param trades list of all {@link com.fdmgroup.model.Trade Trades}
+	 * @return Map ( date , Map Caompany , Daily Company Trade Result)
+	 */
+	public Map<LocalDate, HashMap<String, DailyCompanyTradeResult>> calculateAllDailyCompanyResults(
 			List<Trade> trades) {
 
-		HashMap<LocalDate, EnumMap<Company, List<Trade>>> tradesPerDayAndCompany = splitTradesIntoDateAndCompanyMap(
-				trades);
+		Map<LocalDate, HashMap<String, List<Trade>>> tradesPerDayAndCompany = splitTradesIntoDateAndCompanyMap(trades);
 
-		TreeMap<LocalDate, EnumMap<Company, DailyCompanyTradeResult>> dailyTradeResultsOfCompanies = new TreeMap<>();
+		TreeMap<LocalDate, HashMap<String, DailyCompanyTradeResult>> dailyTradeResultsOfCompanies = new TreeMap<>();
 
 		tradesPerDayAndCompany.forEach((date, dailyTradesOfCompanies) -> {
 
-			dailyTradeResultsOfCompanies.put(date, new EnumMap<>(Company.class));
+			dailyTradeResultsOfCompanies.put(date, new HashMap<>());
 
-			EnumMap<Company, DailyCompanyTradeResult> dailyCompaniesResult = dailyTradeResultsOfCompanies.get(date);
+			HashMap<String, DailyCompanyTradeResult> dailyCompaniesResult = dailyTradeResultsOfCompanies.get(date);
 
 			dailyTradesOfCompanies.forEach((company, companyTrades) -> {
 
@@ -43,14 +51,36 @@ public class DailyCompanyResultCalculator {
 		return dailyTradeResultsOfCompanies;
 
 	}
+	
+	/**
+	 * loops throw list off all trades and returns the set of all traded companies
+	 * 
+	 * @param trades list of all trades
+	 * @return set of all traded companies
+	 */
+	public Set<String> getTradedCompanies(List<Trade> trades) {
+		Set<String> companies = new HashSet<>();
+		
+		for(Trade trade: trades) {
+			companies.add(trade.getCompany());
+		}
+		return new TreeSet<>(companies);
+	}
 
-	private HashMap<LocalDate, EnumMap<Company, List<Trade>>> splitTradesIntoDateAndCompanyMap(
-			List<Trade> trades) {
+	/**
+	 * Splits the list of Trades into two nested Maps with the date as first key and
+	 * the Company as second key.
+	 * 
+	 * @param trades: List of {@link com.fdmgroup.model.Trade Trades}
+	 * @return Map with ( key of date , value: Map ( key of company , value: Trade
+	 *         ))
+	 */
+	private Map<LocalDate, HashMap<String, List<Trade>>> splitTradesIntoDateAndCompanyMap(List<Trade> trades) {
 
-		HashMap<LocalDate, EnumMap<Company, List<Trade>>> tradesPerDayAndCompany = new HashMap<>();
+		HashMap<LocalDate, HashMap<String, List<Trade>>> tradesPerDayAndCompany = new HashMap<>();
 
 		for (Trade trade : trades) {
-			tradesPerDayAndCompany.computeIfAbsent(trade.getDate().toLocalDate(), k -> new EnumMap<>(Company.class))
+			tradesPerDayAndCompany.computeIfAbsent(trade.getDate().toLocalDate(), k -> new HashMap<>())
 					.computeIfAbsent(trade.getCompany(), k -> new ArrayList<>()).add(trade);
 
 		}
@@ -58,6 +88,13 @@ public class DailyCompanyResultCalculator {
 		return tradesPerDayAndCompany;
 	}
 
+	/**
+	 * Loops throw the daily company trades and calculates
+	 * {@link com.fdmgroup.model.DailyCompanyTradeResult company results}
+	 * 
+	 * @param trades for one Company on one day
+	 * @return daily company trade result
+	 */
 	private DailyCompanyTradeResult CalculateDailyCompanyResult(List<Trade> trades) {
 
 		DailyCompanyTradeResult dailyCompanyTradeResult = new DailyCompanyTradeResult();
@@ -85,7 +122,7 @@ public class DailyCompanyResultCalculator {
 				dailyCompanyTradeResult.setLowestTrade(trade);
 			}
 
-			dailyCompanyTradeResult.incrementTradeVolume(trade.getPrice() * trade.getTrades());
+			dailyCompanyTradeResult.incrementTradeVolume(trade.getPrice() * trade.getNumberTraded());
 
 		}
 
